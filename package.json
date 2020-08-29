@@ -1,0 +1,14 @@
+{
+  "name": "stream-scripts",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./app.js"
+  },
+  "dependencies": {
+    "@slack/events-api": "^2.3.4",
+    "@slack/web-api": "^5.11.0",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}

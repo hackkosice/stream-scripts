@@ -1,0 +1,20 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Stream - Alert</title>
+</head>
+<body>
+Sample alert...
+
+<!--suppress HtmlUnknownTarget -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io(window.location.origin);
+    socket.on('connect', function(){});
+    socket.on('alert', function(alert){
+        console.log("Alert: "+alert)
+    });
+    socket.on('disconnect', function(){});
+</script>
+</body>
+</html>
