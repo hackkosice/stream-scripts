@@ -209,3 +209,4 @@ modules.xml
 
 public/**/*.css
 public/**/*.css.map
+env.sh

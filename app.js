@@ -5,14 +5,12 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
+const { createEventAdapter } = require('@slack/events-api');
+const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
+
 server.listen(3000);
 
-app.get('/', (req, res) => {
-    res.send("<div>Hello world!</div>")
-});
-app.use('/', require("./routes/stream"));
-
-// Socket.io connection
+// ===== Socket.io =====
 let allClients = [];
 io.on('connection', (socket) => {
     allClients.push(socket);
@@ -23,3 +21,18 @@ io.on('connection', (socket) => {
 
     socket.emit('alert', "Alert");
 });
+
+// ===== SLACK =====
+// Attach listeners to events by Slack Event "type". See: https://api.slack.com/events/message.im
+slackEvents.on('message', (event) => {
+    console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
+});
+slackEvents.on('error', console.error);
+
+
+
+app.get('/', (req, res) => {
+    res.send("<div>Hello world!</div>")
+});
+app.use('/', require("./routes/stream"));
+app.use('/slack/events', slackEvents.expressMiddleware());
