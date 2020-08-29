@@ -207,6 +207,6 @@ modules.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/webstorm+all,node,sass
 
-public/**/*.css
-public/**/*.css.map
+assets/**/*.css
+assets/**/*.css.map
 env.sh

@@ -2,9 +2,11 @@
 <head>
     <meta charset="utf-8">
     <title>Stream - Alert</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
-Sample alert...
+
 
 <!--suppress HtmlUnknownTarget -->
 <script src="/socket.io/socket.io.js"></script>
@@ -12,7 +14,9 @@ Sample alert...
     const socket = io(window.location.origin);
     socket.on('connect', function(){});
     socket.on('alert', function(alert){
-        console.log("Alert: "+alert)
+        console.log("Alert: "+alert);
+
+
     });
     socket.on('disconnect', function(){});
 </script>
