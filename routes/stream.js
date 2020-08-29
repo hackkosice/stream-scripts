@@ -8,8 +8,19 @@ router.get('/stream-alert', (req, res) => {
 router.post('/slack-command/stream-alert', (req, res) => {
     console.log(`Command from ${req.body.user_name}: /stream-alert ${req.body.text}`)
 
+    let parts = req.body.text.split(" ", 2);
+    const seconds = parseInt(parts[0]);
+    if (parts.length < 2 || isNaN(seconds)) {
+        res.send("Incorrect format");
+        res.sendStatus(422);
+        return;
+    }
+    let message = {
+        text: parts[1],
+        seconds: seconds,
+    }
     router.socketClients.forEach(socket => {
-        socket.emit('alert', req.body.text);
+        socket.emit('alert', message);
     })
 
     res.sendStatus(200);

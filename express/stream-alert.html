@@ -7,18 +7,23 @@
 </head>
 <body>
 
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!--suppress HtmlUnknownTarget -->
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    const socket = io(window.location.origin);
-    socket.on('connect', function(){});
-    socket.on('alert', function(alert){
-        console.log("Alert: "+alert);
+    $(function() {
+        const socket = io(window.location.origin);
+        socket.on('connect', function(){});
+        socket.on('alert', function(alert){
+            console.log("Alert: "+alert.text);
 
-
+            let el = $('<div class="alert alert-warning d-inline-block" role="alert">'+alert.text+'</div>').hide().appendTo('body').fadeIn(1000);
+            setTimeout(function(){
+                el.fadeOut(1000, function() { $(this).remove(); });
+            }, alert.seconds * 1000);
+        });
+        socket.on('disconnect', function(){});
     });
-    socket.on('disconnect', function(){});
 </script>
 </body>
 </html>

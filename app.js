@@ -32,11 +32,11 @@ slackEvents.on('error', console.error);*/
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sassMiddleware({
-    src: 'assets',
-    dest: 'assets',
+    src: __dirname+'/assets',
+    dest: __dirname+'/assets',
     outputStyle: 'compressed',
     indentedSyntax: false,
-    //prefix: '/prefix'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
+    prefix: '/',  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
 }));
 
 
@@ -48,3 +48,4 @@ streamRouter.socketClients = allClients;
 app.use('/', streamRouter);
 //app.use('/slack/events', slackEvents.expressMiddleware());
 app.use(express.static('static'))
+app.use(express.static('assets'))
