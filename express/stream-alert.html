@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body>
+<div class="content"></div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!--suppress HtmlUnknownTarget -->
@@ -16,17 +17,18 @@
             console.log(msg);
 
             let el = $('<div class="alert-block"><div class="alert alert-flamingo d-inline-block" role="alert">'+msg.text+'</div></div>');
-            el.css({'margin-top': '-64px'}).prependTo('body').animate({'margin-top': 0}, 1000);
+            el.css({'margin-top': '-90px'}).prependTo('.content').animate({'margin-top': 0}, 1000);
 
             // fade out element after given number of seconds
             setTimeout(function(){
                 // first make it invisible
-                el.animate({opacity: 0}, 3000, function() {
+                el.animate({opacity: 0}, 5000);
+                setTimeout(function() {
                     // then slide in the rest
-                    $(this).animate({height: 0}, 1000, function() {
+                    $(el).animate({height: 0}, 1000, function() {
                         $(this).remove();
                     })
-                });
+                }, 4000);
             }, msg.seconds * 1000);
         }
 
