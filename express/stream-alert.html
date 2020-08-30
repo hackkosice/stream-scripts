@@ -12,16 +12,25 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     $(function() {
+        window.newAlert = function(msg) {
+            let el = $('<div class="alert-block"><div class="alert alert-flamingo d-inline-block" role="alert">'+msg.text+'</div></div>');
+            el.css({'margin-top': '-64px'}).prependTo('body').animate({'margin-top': 0}, 1000);
+
+            // fade out element after given number of seconds
+            setTimeout(function(){
+                // first make it invisible
+                el.animate({opacity: 0}, 3000, function() {
+                    // then slide in the rest
+                    $(this).animate({height: 0}, 1000, function() {
+                        $(this).remove();
+                    })
+                });
+            }, msg.seconds * 1000);
+        }
+
         const socket = io(window.location.origin);
         socket.on('connect', function(){});
-        socket.on('alert', function(alert){
-            console.log("Alert: "+alert.text);
-
-            let el = $('<div class="alert alert-warning d-inline-block" role="alert">'+alert.text+'</div>').hide().appendTo('body').fadeIn(1000);
-            setTimeout(function(){
-                el.fadeOut(1000, function() { $(this).remove(); });
-            }, alert.seconds * 1000);
-        });
+        socket.on('alert', newAlert);
         socket.on('disconnect', function(){});
     });
 </script>
