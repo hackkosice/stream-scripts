@@ -13,6 +13,8 @@
 <script>
     $(function() {
         window.newAlert = function(msg) {
+            console.log(msg);
+
             let el = $('<div class="alert-block"><div class="alert alert-flamingo d-inline-block" role="alert">'+msg.text+'</div></div>');
             el.css({'margin-top': '-64px'}).prependTo('body').animate({'margin-top': 0}, 1000);
 

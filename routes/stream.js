@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const path = require('path');
-let EmojiConvertor = require('emoji-js');
-let emoji = new EmojiConvertor();
+let emoji = new (require('emoji-js'))();
 emoji.replace_mode = 'unified';
 emoji.allow_native = true;
+let { escapeForSlackWithMarkdown } = require('slack-hawk-down');
 
 router.get('/stream-alert', (req, res) => {
     res.sendFile(path.resolve('express/stream-alert.html'));
@@ -24,8 +24,12 @@ router.post('/slack-command/stream-alert', (req, res) => {
         res.send("Duration is too long");
         return;
     }
+    // turn slack emojis to utf8
+    text = emoji.replace_colons(text);
+    // turn markdown syntax to html
+    text = escapeForSlackWithMarkdown(text);
     let message = {
-        text: emoji.replace_colons(text),
+        text: text,
         seconds: seconds,
     }
     router.socketClients.forEach(socket => {

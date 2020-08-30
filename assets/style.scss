@@ -3,9 +3,29 @@ body{
 }
 .alert-block {
   height: 64px;
+
+  .alert p {
+    margin-bottom: 0;
+  }
 }
 .alert-flamingo {
   background-color: #ef611e;
   border-color: #ef611e;
   color: white;
+}
+
+// slack-hawk-down
+.slack_bold {
+  font-weight: bold;
+}
+.slack_code {
+  unicode-bidi: embed;
+  font-family: monospace;
+  white-space: pre;
+}
+.slack_strikethrough {
+  text-decoration: line-through;
+}
+.slack_italics {
+  font-style: italic;
 }
