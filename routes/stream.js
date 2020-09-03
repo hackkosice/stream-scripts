@@ -45,20 +45,8 @@ router.post('/slack-command/stream-alert', (req, res) => {
 
 router.post('/slack-command/text-overlay', (req, res) => {
     console.log(`Command from ${req.body.user_name}: /text-overlay ${req.body.text}`)
+    let text = req.body.text  // Gets the text part
 
-    let parts = req.body.text.split(" ", 2);
-    let index = req.body.text.indexOf(" ");  // Gets the first index where a space occours
-    let text = req.body.text.substr(index + 1);  // Gets the text part
-
-    const seconds = parseInt(req.body.text.substr(0, index));
-    if (parts.length < 2 || isNaN(seconds)) {
-        res.send("Incorrect format");
-        return;
-    }
-    if (seconds > 5*60) {
-        res.send("Duration is too long");
-        return;
-    }
     // turn slack emojis to utf8
     text = emoji.replace_colons(text);
     // turn markdown syntax to html
@@ -68,7 +56,6 @@ router.post('/slack-command/text-overlay', (req, res) => {
     let message = {
         title: title,
         subtitle: subtitle,
-        seconds: seconds,
     }
     console.log('emitting')
     router.socketClients.forEach(socket => {
