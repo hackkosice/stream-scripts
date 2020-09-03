@@ -9,6 +9,10 @@ router.get('/stream-alert', (req, res) => {
     res.sendFile(path.resolve('express/stream-alert.html'));
 });
 
+router.get('/stream-alert-overlay', (req, res) => {
+    res.sendFile(path.resolve('express/stream-alert-overlay.html'));
+});
+
 router.post('/slack-command/stream-alert', (req, res) => {
     console.log(`Command from ${req.body.user_name}: /stream-alert ${req.body.text}`)
 

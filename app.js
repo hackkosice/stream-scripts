@@ -49,3 +49,5 @@ app.use('/', streamRouter);
 //app.use('/slack/events', slackEvents.expressMiddleware());
 app.use(express.static('static'))
 app.use(express.static('assets'))
+
+console.log('Server listening')
