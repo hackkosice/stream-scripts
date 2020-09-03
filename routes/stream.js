@@ -11,7 +11,17 @@ router.get('/stream-alert', (req, res) => {
 
 router.get('/stream-alert-overlay', (req, res) => {
     res.sendFile(path.resolve('express/stream-alert-overlay.html'));
+    if (TitleOverlayMessage.hasOwnProperty('title')) {
+        setTimeout(() => {
+            router.socketClients.forEach(socket => {
+                socket.emit('text-overlay', TitleOverlayMessage);
+            })
+        }, 1500)
+        
+    }
 });
+
+let TitleOverlayMessage = {}
 
 router.post('/slack-command/stream-alert', (req, res) => {
     console.log(`Command from ${req.body.user_name}: /stream-alert ${req.body.text}`)
@@ -57,6 +67,7 @@ router.post('/slack-command/text-overlay', (req, res) => {
         title: title,
         subtitle: subtitle,
     }
+    TitleOverlayMessage = message
     console.log('emitting')
     router.socketClients.forEach(socket => {
         socket.emit('text-overlay', message);
